@@ -22,6 +22,19 @@ app.get('/players/:id', function(req,res){
     res.send(Repository.getPlayer(req.params.id))
 })
 
+app.post('/tournaments', function(req,res){
+    console.log(req.body)
+    res.send(Repository.createTournament(new model.Tournament(req.body)))
+})
+
+app.get('/tournaments', function(req,res){
+    res.send({ 'tournaments': Repository.getTournaments() })
+})
+
+app.get('/tournaments/:id', function(req,res){
+    res.send(Repository.getTournament(id))
+})
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
