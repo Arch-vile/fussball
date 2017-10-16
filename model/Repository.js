@@ -28,6 +28,10 @@ class Repository {
         return this.tournaments.get(id)
     }
 
+    getTournaments() {
+        return this.tournaments.values()
+    }
+
 }
 
 module.exports = new Repository()

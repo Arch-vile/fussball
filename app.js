@@ -17,9 +17,7 @@ app.post('/players', function(req,res){
 })
 
 app.get('/players/:id', function(req,res){
-    //console.log(req.params.id);
-    //res.send(new model.Player('mikko.ravimo@foo.bar','mixu'))
-    res.send(Repository.getPlayer(req.params.id))
+    res.send(Repository.getPlayer(req.params.id) || 404)
 })
 
 app.post('/tournaments', function(req,res){
@@ -32,7 +30,7 @@ app.get('/tournaments', function(req,res){
 })
 
 app.get('/tournaments/:id', function(req,res){
-    res.send(Repository.getTournament(id))
+    res.send(Repository.getTournament(req.params.id) || 404)
 })
 
 app.listen(3000, function () {
