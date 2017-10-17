@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 const model = require('./model/Model.js')
 const Repository = require('./model/Repository.js')
 
-
+app.use(express.static('public'))
 app.use(bodyParser())
 
 app.post('/players', function(req,res){

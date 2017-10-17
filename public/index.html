@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<body>
+  <div ng-controller="MyController">
+
+        <table>
+                <thead>
+                    <th>Player</th>
+                    <th>Score</th>
+                    <th>Games played</th>
+                </thead>
+                <tbody ng-repeat="score in scoreBoard">
+                    <tr>
+                        <td>{{score.player.alias}}</td>
+                        <td>{{score.score}}</td>
+                        <td>{{score.gameCount}}</td>
+                    </tr>
+                </tbody>
+        </table>
+
+    Hello {{greetMe}}!
+  </div>
+  <script src="http://code.angularjs.org/snapshot/angular.js"></script>
+
+  <script>
+    angular.module('myApp', [])
+      .controller('MyController', ['$scope','$http', function ($scope, $http) {
+        $http.get('http://localhost:3000/tournaments/d767f6755df03/scoreboard').
+        then(function(response) {
+            $scope.scoreBoard = response.data.scores;
+        });
+        $scope.greetMe = 'World';
+      }]);
+
+    angular.element(function() {
+      angular.bootstrap(document, ['myApp']);
+    });
+  </script>
+</body>
+</html>
