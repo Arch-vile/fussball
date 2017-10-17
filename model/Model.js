@@ -1,4 +1,5 @@
 const assert = require('assert');
+const _ = require('underscore')
 
 class Player {
 
@@ -39,52 +40,40 @@ class Tournament {
 
         const matchesPerPlayer = 4;
         console.log(`Generating matches for ${this.players.length} players with ${matchesPerPlayer} matches per player`)
-        assert(matchesPerPlayer % 2 == 0, 'Matches per player must be even number')
         
-       
-
-
-        var playerPool = [];
+        var randomOrderedNamePool = []
         for(var i = 0; i < matchesPerPlayer; i++) {
-            playerPool = playerPool.concat(this.players)
-        }
-        console.log("PlayerPool: " + playerPool)
-
-        const matches = []
-        while(playerPool.length > 0) {
-            const team1Player1 = this.removeRandom(playerPool);
-            const team1Player2 = this.removeRandom(playerPool, team1Player1);
-            const team2Player1 = this.removeRandom(playerPool, team1Player1, team1Player2);
-            const team2Player2 = this.removeRandom(playerPool, team1Player1, team1Player2, team2Player1);
-
-            matches.push(new Match(team1Player1,team1Player2,team2Player1,team2Player2))
-            console.log(playerPool.length)
+            randomOrderedNamePool = randomOrderedNamePool.concat(_.shuffle(this.players))
         }
 
-        return matches;
+        var matches = []
+        for(var i = 0; i < randomOrderedNamePool.length; i+=4) {
+            matches.push(new Match(randomOrderedNamePool[i],randomOrderedNamePool[i+1],randomOrderedNamePool[i+2],randomOrderedNamePool[i+3]))
+        }
+
+        // There is a small change for one player to end up twice in same match, and as I am lazy and stupid lets just brute force
+        if( this.anyDuplicatePlayers(matches)  ) {
+            return this.generateMatches();
+        } else {
+            return matches;
+        }
     }
 
-    removeRandom(from, ...notAcceptedPlayers) {
-        var index = Math.floor(Math.random()*from.length)
-        while( this.contains(notAcceptedPlayers, from[index]) ) {
-            console.log(`Failed to select from ${from} so that it is not in ${notAcceptedPlayers}`)
-            index = Math.floor(Math.random()*from.length)
-        }
-
-        // Removes the element from source array too
-        return from.splice( index, 1)
-    }
-
-    // FIXME: For some reason array.includes seem not to work
-    contains(array,element) {
-        for(var i = 0; i < array.length; i++) {
-            if(array[i] == element) return true
+    anyDuplicatePlayers(matches) {
+        for(var m = 0; m < matches.length; m++) {
+            const match = matches[m]
+            const players = [ match.team1Player1, match.team1Player2, match.team2Player1, match.team2Player2 ]
+            if(new Set(players).size != 4) {
+                console.log("SAME")
+                return true
+            } 
         }
         return false
     }
 
-
 }
+
+
 
 function createId() {
     return Math.random().toString(16).slice(2)
