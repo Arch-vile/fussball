@@ -10,6 +10,7 @@ class Repository {
     }
 
     createPlayer(player) {
+        console.log("creating playre " + player) 
         this.players.set(player.id, player)
         return this.players.get(player.id)
     }
@@ -43,6 +44,38 @@ class Repository {
                 return games[i]
             }
         }
+    }
+
+    calculateScoreBoard(tournamentId) {
+        const self = this
+        const scores = new HashMap()
+        const tournament = this.tournaments.get(tournamentId)
+        const playerIds = tournament.players
+        const games = tournament.games
+
+        playerIds.forEach(function(playerId) {
+            const player = self.players.get(playerId)
+            console.log(playerIds  + " "  + playerId + " " + player.id)
+            scores.set(player.id, new model.ScoreEntry(player,0,0))
+        });
+
+        games.forEach(function(game) {
+            if(game.team1Score) {
+                scores.get(game.team1Player1).gameCount ++;
+                scores.get(game.team1Player1).score += game.team1Score
+                scores.get(game.team1Player2).gameCount ++;
+                scores.get(game.team1Player2).score += game.team1Score
+            }
+
+            if(game.team2Score) {
+                scores.get(game.team2Player1).gameCount ++;
+                scores.get(game.team2Player1).score += game.team2Score
+                scores.get(game.team2Player2).gameCount ++;
+                scores.get(game.team2Player2).score += game.team2Score
+            }
+        })
+
+        return scores.values();
     }
 }
 

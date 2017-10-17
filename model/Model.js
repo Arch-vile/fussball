@@ -26,6 +26,16 @@ class Game {
 
 }
 
+class ScoreEntry {
+
+    constructor(player,score,gameCount) {
+        this.player = player
+        this.score = score
+        this.gameCount = gameCount
+    }
+
+}
+
 class Tournament {
 
     constructor(data) {
@@ -83,5 +93,6 @@ function createId() {
 module.exports = {
     Player : Player,
     Game : Game,
-    Tournament : Tournament
+    Tournament : Tournament,
+    ScoreEntry : ScoreEntry
 }

@@ -6,14 +6,14 @@ const Repository = require('./model/Repository.js')
 
 
 app.use(bodyParser())
-app.get('/', function (req, res) {
-  res.send('Hello World!')
-})
-
 
 app.post('/players', function(req,res){
-    console.log(req.body)
-    res.send(Repository.createPlayer(req.body))
+
+    req.body.players.forEach(function(element) {
+        Repository.createPlayer(element)
+    });
+    
+    res.send(201)
 })
 
 app.get('/players/:id', function(req,res){
@@ -35,6 +35,11 @@ app.get('/tournaments/:id', function(req,res){
 app.put('/tournaments/:tId/games/:gId/result', function(req,res){
     res.send(Repository.reportGameResult(req.params.tId, req.params.gId, req.body))
 })
+
+app.get('/tournaments/:id/scoreboard', function(req,res){
+    res.send({ 'scores': Repository.calculateScoreBoard(req.params.id) })
+})
+
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
