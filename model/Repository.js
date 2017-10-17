@@ -25,6 +25,8 @@ class Repository {
     }
 
     getTournament(id) {
+        console.log(id)
+        console.log(this.tournaments.get(id))
         return this.tournaments.get(id)
     }
 
@@ -32,6 +34,16 @@ class Repository {
         return this.tournaments.values()
     }
 
+    reportGameResult(tournamentId, gameId, result) {
+        const games = this.tournaments.get(tournamentId).games
+        for(var i = 0; i < games.length; i++) {
+            if(games[i].id == gameId) {
+                games[i].team1Score = result.team1Score
+                games[i].team2Score = result.team2Score
+                return games[i]
+            }
+        }
+    }
 }
 
 module.exports = new Repository()

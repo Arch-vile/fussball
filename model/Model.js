@@ -11,7 +11,7 @@ class Player {
 }
 
     
-class Match {
+class Game {
 
     constructor(team1Player1, team1Player2, team2Player1, team2Player2) {
         this.id = createId()
@@ -21,7 +21,7 @@ class Match {
         this.team2Player2 = team2Player2
         this.team1Score = undefined
         this.team2Score = undefined
-        this.matchDate = undefined
+        this.date = undefined
     }
 
 }
@@ -31,11 +31,10 @@ class Tournament {
     constructor(data) {
         Object.assign(this, data);
         this.id = createId()  // Set/override the id
-        this.started = false
-        this.matches = this.generateMatches()
+        this.games = this.generateGames()
     }
 
-    generateMatches() {
+    generateGames() {
         assert(this.players.length >= 4, 'Tournament needs atleast four players')
         assert(this.gamesPerPlayer * this.players.length % 4 == 0, 'Number of games per player multiplied by number of players needs to divisable with four')
 
@@ -43,7 +42,7 @@ class Tournament {
         
         var randomOrderedNamePool = []
         const games = []
-        // Until we have as many matches as we asked for
+        // Until we have as many games as we asked for
         while(games.length < this.gamesPerPlayer * this.players.length / 4) {
 
             // If there is not enough players left for a game
@@ -56,7 +55,7 @@ class Tournament {
                 }
 
             }
-            games.push(new Match(randomOrderedNamePool.shift(),randomOrderedNamePool.shift(),randomOrderedNamePool.shift(),randomOrderedNamePool.shift()))
+            games.push(new Game(randomOrderedNamePool.shift(),randomOrderedNamePool.shift(),randomOrderedNamePool.shift(),randomOrderedNamePool.shift()))
         }
     
         return games;
@@ -83,6 +82,6 @@ function createId() {
 
 module.exports = {
     Player : Player,
-    Match : Match,
+    Game : Game,
     Tournament : Tournament
 }
