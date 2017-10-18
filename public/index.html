@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="fussBallApp">
     <head>
             <style>
                 body { 
@@ -20,51 +20,53 @@
                 }
             </style>
     </head>
-<body>
+<body ng-controller="mainController">
     <h3>Fu&#223;ball</h3>
     <table>
         <tr class="menu">
             <td>
                 <ol>
-                    <li>Scores</li>
-                    <li>Games</li>
+                    <li><a href="#!/">Scores</a></li>
+                    <li><a ng-href="#!/games">Games</a></li>
                 </ol>
             </td>
             <td>
-                <div ng-controller="MyController">
-                    <table>
-                            <thead>
-                                <th>Player</th>
-                                <th>Score</th>
-                                <th>Games played</th>
-                            </thead>
-                            <tbody ng-repeat="score in scoreBoard">
-                                <tr>
-                                    <td>{{ (score.player.alias == null ? score.player.id : score.player.alias) }}</td>
-                                    <td>{{score.score}}</td>
-                                    <td>{{score.gameCount}}</td>
-                                </tr>
-                            </tbody>
-                    </table>
-                </div>
+                    <div ng-view></div>
             </td>
         </tr>
     </table>
   
   <script src="http://code.angularjs.org/snapshot/angular.js"></script>
+  <script src="http://code.angularjs.org/snapshot/angular-route.js"></script>
 
   <script>
-    angular.module('myApp', [])
-      .controller('MyController', ['$scope','$http', function ($scope, $http) {
+      var fussBallApp = angular.module('fussBallApp', ['ngRoute']);
+      fussBallApp.config(function($routeProvider) {
+        $routeProvider
+ 
+            .when('/', {
+                templateUrl: 'scores.html',
+                controller  : 'mainController'
+            })
+    
+            .when('/games', {
+                templateUrl: 'games.html',
+                controller  : 'gameController'
+            });
+ 
+        });
+
+      fussBallApp.controller('mainController', ['$scope','$http', function ($scope, $http) {
         $http.get('http://localhost:3000/tournaments/d767f6755df03/scoreboard').
         then(function(response) {
             $scope.scoreBoard = response.data.scores;
         });
       }]);
 
-    angular.element(function() {
-      angular.bootstrap(document, ['myApp']);
-    });
+      fussBallApp.controller('gameController', ['$scope','$http', function ($scope, $http) {
+            $scope.hello = "world";
+      }]);
+
   </script>
 </body>
 </html>

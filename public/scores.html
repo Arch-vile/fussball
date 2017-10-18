@@ -1,0 +1,14 @@
+<table>
+        <thead>
+            <th>Player</th>
+            <th>Score</th>
+            <th>Games played</th>
+        </thead>
+        <tbody ng-repeat="score in scoreBoard">
+            <tr>
+                <td>{{ (score.player.alias == null ? score.player.id : score.player.alias) }}</td>
+                <td>{{score.score}}</td>
+                <td>{{score.gameCount}}</td>
+            </tr>
+        </tbody>
+</table>
