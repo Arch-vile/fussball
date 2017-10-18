@@ -1,25 +1,56 @@
 <!doctype html>
 <html>
+    <head>
+            <style>
+                body { 
+                    font-family: monospace; 
+                    background-color: black;
+                    color: white;
+                }
+                table, td {
+                    border: 1px solid white;
+                }
+                
+                h1, h2, h3, h4,th {
+                    background-color: white;
+                    color: black;
+                }
+                ul {
+                    list-style-type: decimal;
+                }
+            </style>
+    </head>
 <body>
-  <div ng-controller="MyController">
-
-        <table>
-                <thead>
-                    <th>Player</th>
-                    <th>Score</th>
-                    <th>Games played</th>
-                </thead>
-                <tbody ng-repeat="score in scoreBoard">
-                    <tr>
-                        <td>{{score.player.alias}}</td>
-                        <td>{{score.score}}</td>
-                        <td>{{score.gameCount}}</td>
-                    </tr>
-                </tbody>
-        </table>
-
-    Hello {{greetMe}}!
-  </div>
+    <h3>Fu&#223;ball</h3>
+    <table>
+        <tr class="menu">
+            <td>
+                <ol>
+                    <li>Scores</li>
+                    <li>Games</li>
+                </ol>
+            </td>
+            <td>
+                <div ng-controller="MyController">
+                    <table>
+                            <thead>
+                                <th>Player</th>
+                                <th>Score</th>
+                                <th>Games played</th>
+                            </thead>
+                            <tbody ng-repeat="score in scoreBoard">
+                                <tr>
+                                    <td>{{ (score.player.alias == null ? score.player.id : score.player.alias) }}</td>
+                                    <td>{{score.score}}</td>
+                                    <td>{{score.gameCount}}</td>
+                                </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+  
   <script src="http://code.angularjs.org/snapshot/angular.js"></script>
 
   <script>
@@ -29,7 +60,6 @@
         then(function(response) {
             $scope.scoreBoard = response.data.scores;
         });
-        $scope.greetMe = 'World';
       }]);
 
     angular.element(function() {
