@@ -5,17 +5,7 @@ const model = require('./Model.js')
 class Repository {
 
     constructor() {
-        this.players = new HashMap()
         this.tournaments = new HashMap()
-    }
-
-    createPlayer(player) {
-        this.players.set(player.id, player)
-        return this.players.get(player.id)
-    }
-
-    getPlayer(id) {
-        return this.players.get(id)
     }
 
     createTournament(tournament) {
@@ -47,12 +37,11 @@ class Repository {
         const self = this
         const scores = new HashMap()
         const tournament = this.tournaments.get(tournamentId)
-        const playerIds = tournament.players
+        const players = tournament.players
         const games = tournament.games
 
-        playerIds.forEach(function(playerId) {
-            const player = self.players.get(playerId)
-            scores.set(player.id, new model.ScoreEntry(player,0,0))
+        players.forEach(function(player) {
+            scores.set(player, new model.ScoreEntry(player,0,0))
         });
 
         games.forEach(function(game) {
@@ -72,21 +61,6 @@ class Repository {
         })
 
         return scores.values();
-    }
-
-    gamesView(tournamentId) {
-        const self = this
-        const tournament = this.tournaments.get(tournamentId)
-        const games = []
-        
-        tournament.games.forEach(function(game){
-            const newGame = {}
-            Object.assign(newGame, game);
-            newGame.team1Player1 = self.players.get(game.team1Player1)
-            games.push(newGame)
-        })
-
-        return games;
     }
 }
 

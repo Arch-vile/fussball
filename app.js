@@ -7,19 +7,6 @@ const Repository = require('./model/Repository.js')
 app.use(express.static('public'))
 app.use(bodyParser())
 
-app.post('/players', function(req,res){
-
-    req.body.players.forEach(function(element) {
-        Repository.createPlayer(element)
-    });
-    
-    res.send(201)
-})
-
-app.get('/players/:id', function(req,res){
-    res.send(Repository.getPlayer(req.params.id) || 404)
-})
-
 app.post('/tournaments', function(req,res){
     res.send(Repository.createTournament(new model.Tournament(req.body)))
 })
@@ -40,11 +27,6 @@ app.put('/tournaments/:tId/games/:gId/result', function(req,res){
 app.get('/tournaments/:id/views/scoreboard', function(req,res){
     res.send({ 'scores': Repository.calculateScoreBoard(req.params.id) })
 })
-
-app.get('/tournaments/:id/views/games', function(req,res){
-    res.send({ 'games': Repository.gamesView(req.params.id) })
-})
-
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
