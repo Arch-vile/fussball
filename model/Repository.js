@@ -10,7 +10,6 @@ class Repository {
     }
 
     createPlayer(player) {
-        console.log("creating playre " + player) 
         this.players.set(player.id, player)
         return this.players.get(player.id)
     }
@@ -26,8 +25,6 @@ class Repository {
     }
 
     getTournament(id) {
-        console.log(id)
-        console.log(this.tournaments.get(id))
         return this.tournaments.get(id)
     }
 
@@ -55,7 +52,6 @@ class Repository {
 
         playerIds.forEach(function(playerId) {
             const player = self.players.get(playerId)
-            console.log(playerIds  + " "  + playerId + " " + player.id)
             scores.set(player.id, new model.ScoreEntry(player,0,0))
         });
 
@@ -76,6 +72,21 @@ class Repository {
         })
 
         return scores.values();
+    }
+
+    gamesView(tournamentId) {
+        const self = this
+        const tournament = this.tournaments.get(tournamentId)
+        const games = []
+        
+        tournament.games.forEach(function(game){
+            const newGame = {}
+            Object.assign(newGame, game);
+            newGame.team1Player1 = self.players.get(game.team1Player1)
+            games.push(newGame)
+        })
+
+        return games;
     }
 }
 

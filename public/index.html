@@ -57,14 +57,17 @@
         });
 
       fussBallApp.controller('mainController', ['$scope','$http', function ($scope, $http) {
-        $http.get('http://localhost:3000/tournaments/d767f6755df03/scoreboard').
+        $http.get('http://localhost:3000/tournaments/d767f6755df03/views/scoreboard').
         then(function(response) {
             $scope.scoreBoard = response.data.scores;
         });
       }]);
 
       fussBallApp.controller('gameController', ['$scope','$http', function ($scope, $http) {
-            $scope.hello = "world";
+        $http.get('http://localhost:3000/tournaments/d767f6755df03/views/games').
+        then(function(response) {
+            $scope.games = response.data.scores;
+        });
       }]);
 
   </script>

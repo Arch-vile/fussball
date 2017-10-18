@@ -36,8 +36,13 @@ app.put('/tournaments/:tId/games/:gId/result', function(req,res){
     res.send(Repository.reportGameResult(req.params.tId, req.params.gId, req.body))
 })
 
-app.get('/tournaments/:id/scoreboard', function(req,res){
+ // views for UI
+app.get('/tournaments/:id/views/scoreboard', function(req,res){
     res.send({ 'scores': Repository.calculateScoreBoard(req.params.id) })
+})
+
+app.get('/tournaments/:id/views/games', function(req,res){
+    res.send({ 'games': Repository.gamesView(req.params.id) })
 })
 
 
