@@ -29,8 +29,8 @@
         <tr class="menu">
             <td>
                 <ol>
-                    <li><a href="#!/">Scores</a></li>
-                    <li><a ng-href="#!/games">Games</a></li>
+                    <li><a href="#!/">Leader board</a></li>
+                    <li><a ng-href="#!/games">Game results</a></li>
                 </ol>
             </td>
             <td>
@@ -84,6 +84,12 @@
         then(function(response) {
             $scope.games = response.data.games;
         });
+        $scope.submitScore = function(game) {
+            $http.put('http://localhost:3000/tournaments/' + tournamentId + '/games/' + game.id,game).
+            then(function(response){
+                console.log("submitted")
+            })
+        }
       }]);
 
   </script>

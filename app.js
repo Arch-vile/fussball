@@ -19,7 +19,7 @@ app.get('/tournaments/:id', function(req,res){
     res.send(Repository.getTournament(req.params.id))
 })
 
-app.put('/tournaments/:tId/games/:gId/result', function(req,res){
+app.put('/tournaments/:tId/games/:gId', function(req,res){
     res.send(Repository.reportGameResult(req.params.tId, req.params.gId, req.body))
 })
 

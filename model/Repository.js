@@ -45,16 +45,16 @@ class Repository {
         });
 
         games.forEach(function(game) {
-            if(game.team1Score) {
+            if(game.team1Score && game.team2Score) {
                 scores.get(game.team1Player1).gameCount ++;
                 scores.get(game.team1Player1).score += game.team1Score
+                
                 scores.get(game.team1Player2).gameCount ++;
                 scores.get(game.team1Player2).score += game.team1Score
-            }
-
-            if(game.team2Score) {
+                
                 scores.get(game.team2Player1).gameCount ++;
                 scores.get(game.team2Player1).score += game.team2Score
+                
                 scores.get(game.team2Player2).gameCount ++;
                 scores.get(game.team2Player2).score += game.team2Score
             }
