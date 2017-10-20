@@ -8,7 +8,9 @@ app.use(express.static('public'))
 app.use(bodyParser())
 
 app.post('/tournaments', function(req,res){
-    res.send(Repository.createTournament(new model.Tournament(req.body)))
+    Repository.createTournament(req.body,function(data){
+        res.send(data)
+    })
 })
 
 app.get('/tournaments', function(req,res){
