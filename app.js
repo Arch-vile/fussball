@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 const model = require('./model/Model.js')
 const Repository = require('./model/Repository.js')
 
-app.use(expressMongoDb('mongodb://admin:admin2admin@ds119685.mlab.com:19685/fussball'));
+app.use(expressMongoDb(process.env.mongoURI));
 app.use(express.static('public'))
 app.use(bodyParser())
 
