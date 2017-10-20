@@ -1,47 +1,44 @@
 const model = require('./Model.js')
 const HashMap = require('hashmap')
-const MongoClient = require('mongodb').MongoClient
 var assert = require('assert')
 const _ = require('underscore')
+var ObjectId = require('mongodb').ObjectID;
 
 class Repository {
 
-    constructor() {
-        this.mongoUrl = 'mongodb://admin:admin2admin@ds119685.mlab.com:19685/fussball'
+    constructor(dbConnection) {
+        this.db = dbConnection.collection('tournaments')
     }
 
     createTournament(tournament, cb) {
         tournament.games = this.generateGames(tournament)
-
-        MongoClient.connect(this.mongoUrl, function(err, db) {
-            assert.equal(null, err);
-            console.log("Connected correctly to server.");
-            db.collection('tournaments').insertOne( tournament, function(err, result) {
-                assert.equal(err, null)
-                console.log("Inserted a document into the tournaments collection.")
-                db.close()
-                 cb({ "id": result.insertedId })
-              });
-          });
+        this.db.insertOne(tournament, function(err, tournament){
+            cb(err,tournament)
+        })
     }
 
-    getTournament(id) {
-        return this.tournaments.get(id)
+    getTournament(id, cb) {
+        this.db.findOne({_id: ObjectId(id)}, function(err,tournament){
+            cb(err,tournament)
+        })
     }
 
-    getTournaments() {
-        return this.tournaments.values()
+    getTournaments(cb) {
+        this.db.find({}).toArray(function(err,tournaments){
+            cb(err,tournaments)
+        })
     }
 
-    reportGameResult(tournamentId, gameId, result) {
-        const games = this.tournaments.get(tournamentId).games
-        for(var i = 0; i < games.length; i++) {
-            if(games[i].id == gameId) {
-                games[i].team1Score = result.team1Score
-                games[i].team2Score = result.team2Score
-                return games[i]
-            }
-        }
+    updateGame(tournamentId, game, cb) {
+        this.db.updateOne(
+            {
+                _id: ObjectId(tournamentId),
+                'games.id': { $eq: game.id }
+            }, 
+            { $set: { "games.$" : game } },
+            function(err,result){
+                cb(err || result.matchedCount != 1, game)
+            })
     }
 
     calculateScoreBoard(tournamentId) {
@@ -108,6 +105,7 @@ class Repository {
     hasUniquePlayers(players) {
         return new Set(players).size == 4;
     }
+
 }
 
-module.exports = new Repository()
+module.exports = Repository

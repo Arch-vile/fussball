@@ -11,8 +11,10 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "express-mongo-db": "^2.0.3",
     "hashmap": "^2.3.0",
     "mongodb": "^2.2.33",
+    "mongoose": "^4.12.3",
     "nodemon": "^1.12.1",
     "underscore": "^1.8.3"
   }

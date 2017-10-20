@@ -51,10 +51,11 @@
     jQuery.ajax({
         url: 'http://localhost:3000/tournaments',
         success: function (result) {
-            tournamentId=result.tournaments[0].id
+            tournamentId=result.tournaments[0]._id
         },
         async: false
     });
+    console.log("Using tournamentId: " + tournamentId)
 
       var fussBallApp = angular.module('fussBallApp', ['ngRoute']);
       fussBallApp.config(function($routeProvider) {
