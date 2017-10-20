@@ -18,6 +18,9 @@
                 ul {
                     list-style-type: decimal;
                 }
+                a, a:hover, a:active, a:visited {
+                    color: white
+                }
             </style>
     </head>
 <body ng-controller="mainController">
@@ -35,11 +38,24 @@
             </td>
         </tr>
     </table>
-  
+ <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
   <script src="http://code.angularjs.org/snapshot/angular.js"></script>
   <script src="http://code.angularjs.org/snapshot/angular-route.js"></script>
 
   <script>
+
+    var tournamentId
+    jQuery.ajax({
+        url: 'http://localhost:3000/tournaments',
+        success: function (result) {
+            tournamentId=result.tournaments[0].id
+        },
+        async: false
+    });
+
       var fussBallApp = angular.module('fussBallApp', ['ngRoute']);
       fussBallApp.config(function($routeProvider) {
         $routeProvider
@@ -57,16 +73,16 @@
         });
 
       fussBallApp.controller('mainController', ['$scope','$http', function ($scope, $http) {
-        $http.get('http://localhost:3000/tournaments/d767f6755df03/views/scoreboard').
+        $http.get('http://localhost:3000/tournaments/' + tournamentId + '/views/scoreboard').
         then(function(response) {
             $scope.scoreBoard = response.data.scores;
         });
       }]);
 
       fussBallApp.controller('gameController', ['$scope','$http', function ($scope, $http) {
-        $http.get('http://localhost:3000/tournaments/d767f6755df03/views/games').
+        $http.get('http://localhost:3000/tournaments/' + tournamentId).
         then(function(response) {
-            $scope.games = response.data.scores;
+            $scope.games = response.data.games;
         });
       }]);
 

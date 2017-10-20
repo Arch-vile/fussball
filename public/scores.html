@@ -6,7 +6,7 @@
         </thead>
         <tbody ng-repeat="score in scoreBoard">
             <tr>
-                <td>{{ (score.player.alias == null ? score.player.id : score.player.alias) }}</td>
+                <td>{{score.player}}</td>
                 <td>{{score.score}}</td>
                 <td>{{score.gameCount}}</td>
             </tr>

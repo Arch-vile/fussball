@@ -1,1 +1,16 @@
-games
+<table>
+        <thead>
+            <th>Team 1</th>
+            <th>Team 2</th>
+            <th>Result</th>
+            <th>Date</th>
+        </thead>
+        <tbody ng-repeat="game in games">
+            <tr>
+                <td>{{game.team1Player1}} - {{game.team1Player2}}</td>
+                <td>{{game.team2Player1}} - {{game.team2Player2}}</td>
+                <td>{{game.team1Score}} - {{game.team2Score}}</td>
+                <td>{{game.date}}</td>
+            </tr>
+        </tbody>
+</table>
