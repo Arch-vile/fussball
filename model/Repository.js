@@ -41,34 +41,35 @@ class Repository {
             })
     }
 
-    calculateScoreBoard(tournamentId) {
-        const self = this
-        const scores = new HashMap()
-        const tournament = this.tournaments.get(tournamentId)
-        const players = tournament.players
-        const games = tournament.games
+    leaderBoard(tournamentId, cb) {
+        
+        this.getTournament(tournamentId, function(err,tournament){
+            const scores = new HashMap()
+            const players = tournament.players
+            const games = tournament.games
+    
+            players.forEach(function(player) {
+                scores.set(player, new model.ScoreEntry(player,0,0))
+            });
+    
+            games.forEach(function(game) {
+                if(game.team1Score && game.team2Score) {
+                    scores.get(game.team1Player1).gameCount ++;
+                    scores.get(game.team1Player1).score += game.team1Score
+                    
+                    scores.get(game.team1Player2).gameCount ++;
+                    scores.get(game.team1Player2).score += game.team1Score
+                    
+                    scores.get(game.team2Player1).gameCount ++;
+                    scores.get(game.team2Player1).score += game.team2Score
+                    
+                    scores.get(game.team2Player2).gameCount ++;
+                    scores.get(game.team2Player2).score += game.team2Score
+                }
+            })
 
-        players.forEach(function(player) {
-            scores.set(player, new model.ScoreEntry(player,0,0))
-        });
-
-        games.forEach(function(game) {
-            if(game.team1Score && game.team2Score) {
-                scores.get(game.team1Player1).gameCount ++;
-                scores.get(game.team1Player1).score += game.team1Score
-                
-                scores.get(game.team1Player2).gameCount ++;
-                scores.get(game.team1Player2).score += game.team1Score
-                
-                scores.get(game.team2Player1).gameCount ++;
-                scores.get(game.team2Player1).score += game.team2Score
-                
-                scores.get(game.team2Player2).gameCount ++;
-                scores.get(game.team2Player2).score += game.team2Score
-            }
+            cb(err,scores.values())
         })
-
-        return scores.values();
     }
 
     generateGames(tournament) {

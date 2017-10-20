@@ -39,7 +39,9 @@ app.put('/tournaments/:tId/games/:gId', function(req,res){
 
  // views for UI
 app.get('/tournaments/:id/views/scoreboard', function(req,res){
-    res.send({ 'scores': Repository.calculateScoreBoard(req.params.id) })
+    new Repository(req.db).leaderBoard(req.params.id, function(err,leaderBoard) {
+        res.send({ 'scores': leaderBoard })
+    })
 })
 
 app.listen(3000, function () {
