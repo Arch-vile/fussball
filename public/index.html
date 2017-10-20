@@ -49,7 +49,7 @@
 
     var tournamentId
     jQuery.ajax({
-        url: 'http://localhost:3000/tournaments',
+        url: '/tournaments',
         success: function (result) {
             tournamentId=result.tournaments[0]._id
         },
@@ -74,19 +74,19 @@
         });
 
       fussBallApp.controller('mainController', ['$scope','$http', function ($scope, $http) {
-        $http.get('http://localhost:3000/tournaments/' + tournamentId + '/views/scoreboard').
+        $http.get('/tournaments/' + tournamentId + '/views/scoreboard').
         then(function(response) {
             $scope.scoreBoard = response.data.scores;
         });
       }]);
 
       fussBallApp.controller('gameController', ['$scope','$http', function ($scope, $http) {
-        $http.get('http://localhost:3000/tournaments/' + tournamentId).
+        $http.get('/tournaments/' + tournamentId).
         then(function(response) {
             $scope.games = response.data.games;
         });
         $scope.submitScore = function(game) {
-            $http.put('http://localhost:3000/tournaments/' + tournamentId + '/games/' + game.id,game).
+            $http.put('/tournaments/' + tournamentId + '/games/' + game.id,game).
             then(function(response){
                 console.log("submitted")
             })
