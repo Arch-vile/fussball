@@ -56,19 +56,30 @@ class Repository {
                 if(game.team1Score && game.team2Score) {
 
                     const team1Score = game.team1Score > game.team2Score ? game.team1Score : Math.floor(game.team1Score / 2)
+                    const team1GoalDiff = game.team1Score - game.team2Score
                     const team2Score = game.team2Score > game.team1Score ? game.team2Score : Math.floor(game.team2Score / 2)
+                    const team2GoalDiff = game.team2Score - game.team1Score
 
-                    scores.get(game.team1Player1).gameCount ++;
-                    scores.get(game.team1Player1).score += team1Score
+                    const team1Player1Score = scores.get(game.team1Player1)
+                    team1Player1Score.gameCount ++;
+                    team1Player1Score.score += team1Score
+                    team1Player1Score.goalDifference = team1GoalDiff
                     
-                    scores.get(game.team1Player2).gameCount ++;
-                    scores.get(game.team1Player2).score += team1Score
+                    const team1Player2Score = scores.get(game.team1Player2)
+                    team1Player2Score.gameCount ++;
+                    team1Player2Score.score += team1Score
+                    team1Player2Score.goalDifference = team1GoalDiff                    
                     
-                    scores.get(game.team2Player1).gameCount ++;
-                    scores.get(game.team2Player1).score += team2Score
+                    const team2Player1Score = scores.get(game.team2Player1)
+                    team2Player1Score.gameCount ++;
+                    team2Player1Score.score += team2Score
+                    team2Player1Score.goalDifference = team2GoalDiff
+
+                    const team2Player2Score = scores.get(game.team2Player2)
+                    team2Player2Score.gameCount ++;
+                    team2Player2Score.score += team2Score
+                    team2Player2Score.goalDifference = team2GoalDiff
                     
-                    scores.get(game.team2Player2).gameCount ++;
-                    scores.get(game.team2Player2).score += team2Score
                 }
             })
 
