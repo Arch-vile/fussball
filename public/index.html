@@ -24,13 +24,15 @@
             </style>
     </head>
 <body ng-controller="mainController">
-    <h3>Fu&#223;ball</h3>
+    <h2>Fu&#223;ball</h2>
     <table>
         <tr class="menu">
             <td>
                 <ol>
-                    <li><a href="#!/">Leader board</a></li>
-                    <li><a ng-href="#!/games">Game results</a></li>
+                    <li><a href="#!/">Leader Board</a></li>
+                    <li><a ng-href="#!/games">Game Results</a></li>
+                    <li><a ng-href="#!/rules">Rules</a></li>
+                    <li><a ng-href="#!/help">Help</a></li>
                 </ol>
             </td>
             <td>
@@ -69,7 +71,16 @@
             .when('/games', {
                 templateUrl: 'games.html',
                 controller  : 'gameController'
-            });
+            })
+            
+            .when('/help', {
+                templateUrl: 'help.html'
+            })
+
+            .when('/rules', {
+                templateUrl: 'rules.html'
+            })
+            ;
  
         });
 
@@ -91,7 +102,7 @@
             $scope.loaded = true
             $scope.games = response.data.games;
         });
-        
+
         $scope.submitScore = function(game) {
             $http.put('/tournaments/' + tournamentId + '/games/' + game.id,game).
             then(function(response){
