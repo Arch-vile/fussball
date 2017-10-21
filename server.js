@@ -44,5 +44,5 @@ app.get('/tournaments/:id/views/scoreboard', function(req,res){
     })
 })
 app.listen(process.env.PORT || 3000, function () {
-  console.log('Example app listening on port 3000!')
+  console.log('Fussball app listening on port ' + (process.env.PORT || 3000))
 })

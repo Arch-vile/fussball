@@ -8,7 +8,7 @@
         </thead>
         <tbody ng-repeat="game in games">
             <tr>
-                <td>{{game.team1Player1}} - {{game.team1Player2}}</td>
+                <td>{{game.team1Player1.split('@')[0]}}<br/>{{game.team1Player2.split('@')[0]}}</td>
                 <td ng-if="game.team1Score">{{game.team1Score}}</td>
                 <td ng-if="!game.team1Score">
                     <select ng-model="game.team1Score" ng-change="submitScore(game)" ng-options="score for score in [1,2,3,4,5,6,7,8,9,10]">
@@ -20,7 +20,7 @@
                     <select ng-model="game.team2Score" ng-change="submitScore(game)" ng-options="score for score in [1,2,3,4,5,6,7,8,9,10]">
                     </select>
                 </td>
-                <td>{{game.team2Player1}} - {{game.team2Player2}}</td>
+                <td>{{game.team2Player1.split('@')[0]}}<br/>{{game.team2Player2.split('@')[0]}}</td>
                 
             </tr>
         </tbody>

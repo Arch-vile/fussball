@@ -6,7 +6,7 @@
         </thead>
         <tbody ng-repeat="score in scoreBoard">
             <tr>
-                <td>{{score.player}}</td>
+                <td>{{score.player.split('@')[0]}}</td>
                 <td>{{score.score}}</td>
                 <td>{{score.gameCount}}</td>
             </tr>
