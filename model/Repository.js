@@ -54,17 +54,21 @@ class Repository {
     
             games.forEach(function(game) {
                 if(game.team1Score && game.team2Score) {
+
+                    const team1Score = game.team1Score > game.team2Score ? game.team1Score : Math.floor(game.team1Score / 2)
+                    const team2Score = game.team2Score > game.team1Score ? game.team2Score : Math.floor(game.team2Score / 2)
+
                     scores.get(game.team1Player1).gameCount ++;
-                    scores.get(game.team1Player1).score += game.team1Score
+                    scores.get(game.team1Player1).score += team1Score
                     
                     scores.get(game.team1Player2).gameCount ++;
-                    scores.get(game.team1Player2).score += game.team1Score
+                    scores.get(game.team1Player2).score += team1Score
                     
                     scores.get(game.team2Player1).gameCount ++;
-                    scores.get(game.team2Player1).score += game.team2Score
+                    scores.get(game.team2Player1).score += team2Score
                     
                     scores.get(game.team2Player2).gameCount ++;
-                    scores.get(game.team2Player2).score += game.team2Score
+                    scores.get(game.team2Player2).score += team2Score
                 }
             })
 
