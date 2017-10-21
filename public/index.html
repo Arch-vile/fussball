@@ -74,18 +74,24 @@
         });
 
       fussBallApp.controller('mainController', ['$scope','$http', function ($scope, $http) {
+        console.log("in controller")
+        $scope.loaded = false
         $http.get('/tournaments/' + tournamentId + '/views/scoreboard').
         then(function(response) {
+            $scope.loaded = true
             $scope.scoreBoard = response.data.scores;
         });
 
       }]);
 
       fussBallApp.controller('gameController', ['$scope','$http', function ($scope, $http) {
+        $scope.loaded = false
         $http.get('/tournaments/' + tournamentId).
         then(function(response) {
+            $scope.loaded = true
             $scope.games = response.data.games;
         });
+        
         $scope.submitScore = function(game) {
             $http.put('/tournaments/' + tournamentId + '/games/' + game.id,game).
             then(function(response){
