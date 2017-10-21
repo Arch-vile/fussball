@@ -78,6 +78,7 @@
         then(function(response) {
             $scope.scoreBoard = response.data.scores;
         });
+
       }]);
 
       fussBallApp.controller('gameController', ['$scope','$http', function ($scope, $http) {
