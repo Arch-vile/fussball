@@ -11,6 +11,7 @@ class Repository {
     }
 
     createTournament(tournament, cb) {
+        tournament.createdAt = new Date()
         tournament.games = this.generateGames(tournament)
         this.db.insertOne(tournament, function(err, tournament){
             cb(err,tournament)
@@ -30,6 +31,7 @@ class Repository {
     }
 
     updateGame(tournamentId, game, cb) {
+        game.udpdatedAt = new Date()
         this.db.updateOne(
             {
                 _id: ObjectId(tournamentId),

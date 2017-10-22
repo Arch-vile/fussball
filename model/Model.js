@@ -11,7 +11,6 @@ class Game {
         this.team2Player2 = team2Player2
         this.team1Score = undefined
         this.team2Score = undefined
-        this.date = undefined
     }
 
 }
