@@ -117,7 +117,12 @@
             $scope.games = response.data.games;
         });
 
+        $scope.markDirty = function(game) {
+            game.isDirty = true
+        }
+
         $scope.submitScore = function(game) {
+            delete game.isDirty
             $http.put('/tournaments/' + tournamentId + '/games/' + game.id,game).
             then(function(response){
                 console.log("submitted")
