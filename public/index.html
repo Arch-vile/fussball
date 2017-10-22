@@ -99,7 +99,6 @@
         });
 
       fussBallApp.controller('mainController', ['$scope','$http', function ($scope, $http) {
-        console.log("in controller")
         $scope.loaded = false
         $http.get('/tournaments/' + tournamentId + '/views/scoreboard').
         then(function(response) {
@@ -125,7 +124,7 @@
             delete game.isDirty
             $http.put('/tournaments/' + tournamentId + '/games/' + game.id,game).
             then(function(response){
-                console.log("submitted")
+                // nothing to do here
             })
         }
       }]);
