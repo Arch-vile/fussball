@@ -48,10 +48,20 @@ class Repository {
             const players = tournament.players
             const games = tournament.games
     
-            players.forEach(function(player) {
-                scores.set(player, new model.ScoreEntry(player,0,0))
-            });
-    
+
+            function update(scores, player, teamScore, goalDiff) {
+                const scoreEntry = scores.get(player) || { 
+                    player: player, 
+                    gameCount: 0, 
+                    score: 0,
+                    goalDifference: 0 }
+
+                scoreEntry.gameCount ++;
+                scoreEntry.score += teamScore
+                scoreEntry.goalDifference += goalDiff
+                scores.set(player,scoreEntry)
+            }
+
             games.forEach(function(game) {
                 if(game.team1Score && game.team2Score) {
 
@@ -60,26 +70,10 @@ class Repository {
                     const team2Score = game.team2Score > game.team1Score ? game.team2Score : Math.floor(game.team2Score / 2)
                     const team2GoalDiff = game.team2Score - game.team1Score
 
-                    const team1Player1Score = scores.get(game.team1Player1)
-                    team1Player1Score.gameCount ++;
-                    team1Player1Score.score += team1Score
-                    team1Player1Score.goalDifference += team1GoalDiff
-                    
-                    const team1Player2Score = scores.get(game.team1Player2)
-                    team1Player2Score.gameCount ++;
-                    team1Player2Score.score += team1Score
-                    team1Player2Score.goalDifference += team1GoalDiff                    
-                    
-                    const team2Player1Score = scores.get(game.team2Player1)
-                    team2Player1Score.gameCount ++;
-                    team2Player1Score.score += team2Score
-                    team2Player1Score.goalDifference += team2GoalDiff
-
-                    const team2Player2Score = scores.get(game.team2Player2)
-                    team2Player2Score.gameCount ++;
-                    team2Player2Score.score += team2Score
-                    team2Player2Score.goalDifference += team2GoalDiff
-                    
+                    update(scores,game.team1Player1,team1Score,team1GoalDiff)
+                    update(scores,game.team1Player2,team1Score,team1GoalDiff)
+                    update(scores,game.team2Player1,team2Score,team2GoalDiff)
+                    update(scores,game.team2Player2,team2Score,team2GoalDiff)
                 }
             })
 

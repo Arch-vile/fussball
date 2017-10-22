@@ -16,20 +16,10 @@ class Game {
 
 }
 
-class ScoreEntry {
-    constructor(player,score,gameCount) {
-        this.player = player
-        this.score = score
-        this.gameCount = gameCount
-        this.goalDifference = 0
-    }
-}
-
 function createId() {
     return Math.random().toString(16).slice(2)
 }
 
 module.exports = {
-    Game : Game,
-    ScoreEntry : ScoreEntry
+    Game : Game
 }

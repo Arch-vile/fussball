@@ -43,6 +43,7 @@ app.get('/tournaments/:id/views/scoreboard', function(req,res){
         res.send({ 'scores': leaderBoard })
     })
 })
+
 app.listen(process.env.PORT || 3000, function () {
   console.log('Fussball app listening on port ' + (process.env.PORT || 3000))
 })
