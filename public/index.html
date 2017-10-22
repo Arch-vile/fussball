@@ -100,7 +100,7 @@
 
       fussBallApp.controller('mainController', ['$scope','$http', function ($scope, $http) {
         $scope.loaded = false
-        $http.get('/tournaments/' + tournamentId + '/views/scoreboard').
+        $http.get('/tournaments/' + tournamentId + '/views/scoreboard', headers()).
         then(function(response) {
             $scope.loaded = true
             $scope.scoreBoard = response.data.scores;
@@ -110,7 +110,7 @@
 
       fussBallApp.controller('gameController', ['$scope','$http', function ($scope, $http) {
         $scope.loaded = false
-        $http.get('/tournaments/' + tournamentId).
+        $http.get('/tournaments/' + tournamentId, headers()).
         then(function(response) {
             $scope.loaded = true
             $scope.games = response.data.games;
@@ -122,12 +122,18 @@
 
         $scope.submitScore = function(game) {
             delete game.isDirty
-            $http.put('/tournaments/' + tournamentId + '/games/' + game.id,game).
+            $http.put('/tournaments/' + tournamentId + '/games/' + game.id,game), headers().
             then(function(response){
                 // nothing to do here
             })
         }
       }]);
+
+      function headers() {
+        return {
+            headers: { 'Cache-Control': 'no-cache' }
+        }
+      }
 
   </script>
 </body>
