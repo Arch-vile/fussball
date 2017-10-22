@@ -63,22 +63,22 @@ class Repository {
                     const team1Player1Score = scores.get(game.team1Player1)
                     team1Player1Score.gameCount ++;
                     team1Player1Score.score += team1Score
-                    team1Player1Score.goalDifference = team1GoalDiff
+                    team1Player1Score.goalDifference += team1GoalDiff
                     
                     const team1Player2Score = scores.get(game.team1Player2)
                     team1Player2Score.gameCount ++;
                     team1Player2Score.score += team1Score
-                    team1Player2Score.goalDifference = team1GoalDiff                    
+                    team1Player2Score.goalDifference += team1GoalDiff                    
                     
                     const team2Player1Score = scores.get(game.team2Player1)
                     team2Player1Score.gameCount ++;
                     team2Player1Score.score += team2Score
-                    team2Player1Score.goalDifference = team2GoalDiff
+                    team2Player1Score.goalDifference += team2GoalDiff
 
                     const team2Player2Score = scores.get(game.team2Player2)
                     team2Player2Score.gameCount ++;
                     team2Player2Score.score += team2Score
-                    team2Player2Score.goalDifference = team2GoalDiff
+                    team2Player2Score.goalDifference += team2GoalDiff
                     
                 }
             })

@@ -21,6 +21,7 @@ class ScoreEntry {
         this.player = player
         this.score = score
         this.gameCount = gameCount
+        this.goalDifference = 0
     }
 }
 
