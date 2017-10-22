@@ -1,18 +1,24 @@
 <h2>Leader Board</h2>
 <div ng-if="!loaded">Loading...</div>
-<table ng-if="loaded" id="leaderBoard" class="tablesorter">
-        <thead>
-            <th>Player</th>
-            <th>Points</th>
-            <th>Games played</th>
-            <th>Goal diff</th>
-        </thead>
-        <tbody ng-repeat="score in scoreBoard | orderBy: ['-score','-goalDifference']">
-            <tr>
-                <td>{{score.player.split('@')[0]}}</td>
-                <td>{{score.score}}</td>
-                <td>{{score.gameCount}}</td>
-                <td>{{score.goalDifference}}</td>
-            </tr>
-        </tbody>
-</table>
+<div>
+    <div align="right">
+        Filter: <input ng-model="playerFilter"/>
+    </div>
+    <br/>
+    <table ng-if="loaded" id="leaderBoard" class="tablesorter">
+            <thead>
+                <th>Player</th>
+                <th>Points</th>
+                <th>Games played</th>
+                <th>Goal diff</th>
+            </thead>
+            <tbody ng-repeat="score in scoreBoard | orderBy: ['-score','-goalDifference'] | filter: playerFilter">
+                <tr>
+                    <td>{{score.player.split('@')[0]}}</td>
+                    <td>{{score.score}}</td>
+                    <td>{{score.gameCount}}</td>
+                    <td>{{score.goalDifference}}</td>
+                </tr>
+            </tbody>
+    </table>
+</div>

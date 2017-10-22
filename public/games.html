@@ -4,6 +4,11 @@
     <p>
         Note: Remember to submit scores after inserting them!
     </p>
+    
+    <div align="right">
+        Filter: <input ng-model="playerFilter"/>
+    </div>
+    <br/>
     <table>
             <thead>
                 <th>Home team</th>
@@ -13,7 +18,7 @@
                 <th>Guest team</th>
                 <th>Action</th>
             </thead>
-            <tbody ng-repeat="game in games">
+            <tbody ng-repeat="game in games | filter:playerFilter">
                 <tr>
                     <td>{{game.team1Player1.split('@')[0]}}<br/>{{game.team1Player2.split('@')[0]}}</td>
                     <td ng-if="!game.isDirty && game.team1Score" align="right">{{game.team1Score}}</td>
