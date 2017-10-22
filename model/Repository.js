@@ -49,19 +49,20 @@ class Repository {
             const scores = new HashMap()
             const players = tournament.players
             const games = tournament.games
-    
 
-            function update(scores, player, teamScore, goalDiff) {
-                const scoreEntry = scores.get(player) || { 
+            players.forEach(function(player){
+                scores.set(player,{ 
                     player: player, 
                     gameCount: 0, 
                     score: 0,
-                    goalDifference: 0 }
+                    goalDifference: 0 })
+            })
 
+            function update(scores, player, teamScore, goalDiff) {
+                const scoreEntry = scores.get(player)
                 scoreEntry.gameCount ++;
                 scoreEntry.score += teamScore
                 scoreEntry.goalDifference += goalDiff
-                scores.set(player,scoreEntry)
             }
 
             games.forEach(function(game) {
