@@ -17,7 +17,7 @@
             <tbody ng-repeat="score in scoreBoard | orderBy: ['rank'] | filter: playerFilter">
                 
                 <tr class="tableHeader" ng-if="score.rank == 1 && !playerFilter">
-                    <td colspan=5>Current Finalists</td>
+                    <td colspan=5>Current Finalists (subject to change)</td>
                 </tr>
                 
                 <tr ng-class="score.rank <= 4 ? 'topFour' : 'none' "> 
