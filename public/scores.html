@@ -13,10 +13,13 @@
                 <th>Games played</th>
                 <th>Goal diff</th>
             </thead>
-            <tr class="tableHeader">
-                <td colspan=5>Current Finalists</td>
-            </tr>
+            
             <tbody ng-repeat="score in scoreBoard | orderBy: ['rank'] | filter: playerFilter">
+                
+                <tr class="tableHeader" ng-if="score.rank == 1 && !playerFilter">
+                    <td colspan=5>Current Finalists</td>
+                </tr>
+                
                 <tr ng-class="score.rank <= 4 ? 'topFour' : 'none' "> 
                     <td ng-if="score.rank <= 4"><img  width="30" src="trophy.gif" class="trophy"></td>
                     <td ng-if="score.rank > 4">{{score.rank}}</td>
@@ -25,7 +28,7 @@
                     <td>{{score.gameCount}}</td>
                     <td>{{score.goalDifference}}</td>
                 </tr>
-                <tr class="tableHeader" ng-if="score.rank == 4">
+                <tr class="tableHeader" ng-if="score.rank == 4 && !playerFilter">
                         <td colspan=5>Rest of Losers</td>
                 </tr>
             </tbody>
