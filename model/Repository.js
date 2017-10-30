@@ -80,7 +80,17 @@ class Repository {
                 }
             })
 
-            cb(err,scores.values())
+            const sorted = _(scores.values())
+            .chain()
+            .sortBy('goalDifference')
+            .sortBy('score')
+            .reverse()
+            .value()
+
+            // And ranking number
+            sorted.forEach(function(value,i){ value.rank=i+1})
+
+            cb(err, sorted)
         })
     }
 
