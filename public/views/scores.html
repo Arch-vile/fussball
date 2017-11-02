@@ -1,11 +1,11 @@
 <h2>Leader Board</h2>
-<div ng-if="!loaded">Loading...</div>
-<div>
+<div ng-include="'./fragments/loading.html'"></div>
+<div ng-if="loaded">
     <div align="right">
         Filter: <input ng-model="playerFilter" autofocus/>
     </div>
     <br/>
-    <table ng-if="loaded" id="leaderBoard" class="tablesorter">
+    <table id="leaderBoard" class="tablesorter">
             <thead>
                 <th>Rank</th>
                 <th>Player</th>

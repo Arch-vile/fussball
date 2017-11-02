@@ -1,0 +1,40 @@
+body { 
+    font-family: monospace; 
+    background-color: black;
+    color: white;
+}
+table, td {
+    border: 1px solid white;
+    padding: 0.5em;
+}
+
+h1, h2, h3, h4,th {
+    background-color: white;
+    color: black;
+    padding-left: 0.5em;
+}
+
+h3 {
+    padding-left: 1.5em;
+}
+
+ul {
+    list-style-type: decimal;
+}
+a, a:hover, a:active, a:visited {
+    color: white
+}
+
+tr.tableHeader {
+    background-color: #222
+}
+
+img.trophy {
+    padding: -5;
+    margin: 0;
+}
+
+
+.hidden {
+    display: none;
+  }

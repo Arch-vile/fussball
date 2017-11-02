@@ -1,150 +1,28 @@
 <!doctype html>
 <html ng-app="fussBallApp">
-    <head>
-            <style>
-                body { 
-                    font-family: monospace; 
-                    background-color: black;
-                    color: white;
-                }
-                table, td {
-                    border: 1px solid white;
-                    padding: 0.5em;
-                }
-                
-                h1, h2, h3, h4,th {
-                    background-color: white;
-                    color: black;
-                    padding-left: 0.5em;
-                }
 
-                h3 {
-                    padding-left: 1.5em;
-                }
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script src="./js/uiFunctions.js"></script>
+    <script src="http://code.angularjs.org/snapshot/angular.js"></script>
+    <script src="http://code.angularjs.org/snapshot/angular-route.js"></script>
+    <script src="./js/main.js"></script>
+</head>
 
-                ul {
-                    list-style-type: decimal;
-                }
-                a, a:hover, a:active, a:visited {
-                    color: white
-                }
-
-                tr.tableHeader {
-                    background-color: #222
-                }
-
-                img.trophy {
-                    padding: -5;
-                    margin: 0;
-                }
-        
-            </style>
-    </head>
 <body ng-controller="mainController">
-    <pre>
-._. ___________                  ___.          .__  .__    
-| | \_   _____/_ __  ______ _____\_ |__ _____  |  | |  |   
-| |  |    __)|  |  \/  ___//  ___/| __ \\__  \ |  | |  |   
- \|  |     \ |  |  /\___ \ \___ \ | \_\ \/ __ \|  |_|  |__ 
- __  \___  / |____//____  >____  >|___  (____  /____/____/ 
- \/      \/             \/     \/     \/     \/            
-    </pre>
+    <div ng-include="'./fragments/logo.html'"></div>
     <table>
         <tr class="menu">
             <td valign="top">
-                <ol>
-                    <li><a href="#!/">Leader&nbsp;Board</a></li>
-                    <li><a ng-href="#!/games">Games</a></li>
-                    <li><a ng-href="#!/rules">Rules</a></li>
-                    <li><a ng-href="#!/help">Help</a></li>
-                </ol>
+                <div ng-include="'./fragments/menu.html'"></div>
             </td>
             <td>
-                    <div ng-view></div>
+                <div ng-view></div>
             </td>
         </tr>
     </table>
- <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
-  <script src="http://code.angularjs.org/snapshot/angular.js"></script>
-  <script src="http://code.angularjs.org/snapshot/angular-route.js"></script>
-
-  <script>
-
-    var tournamentId
-    jQuery.ajax({
-        url: '/tournaments',
-        success: function (result) {
-            tournamentId=result.tournaments[0]._id
-        },
-        async: false
-    });
-    console.log("Using tournamentId: " + tournamentId)
-
-      var fussBallApp = angular.module('fussBallApp', ['ngRoute']);
-      fussBallApp.config(function($routeProvider) {
-        $routeProvider
- 
-            .when('/', {
-                templateUrl: 'scores.html',
-                controller  : 'mainController'
-            })
-    
-            .when('/games', {
-                templateUrl: 'games.html',
-                controller  : 'gameController'
-            })
-            
-            .when('/help', {
-                templateUrl: 'help.html'
-            })
-
-            .when('/rules', {
-                templateUrl: 'rules.html'
-            })
-            ;
- 
-        });
-
-      fussBallApp.controller('mainController', ['$scope','$http', function ($scope, $http) {
-        $scope.loaded = false
-        $http.get('/tournaments/' + tournamentId + '/views/scoreboard', headers()).
-        then(function(response) {
-            $scope.loaded = true
-            $scope.scoreBoard = response.data.scores;
-        });
-
-      }]);
-
-      fussBallApp.controller('gameController', ['$scope','$http', function ($scope, $http) {
-        $scope.loaded = false
-        $http.get('/tournaments/' + tournamentId, headers()).
-        then(function(response) {
-            $scope.loaded = true
-            $scope.games = response.data.games;
-        });
-
-        $scope.markDirty = function(game) {
-            game.isDirty = true
-        }
-
-        $scope.submitScore = function(game) {
-            delete game.isDirty
-            $http.put('/tournaments/' + tournamentId + '/games/' + game.id,game), headers().
-            then(function(response){
-                // nothing to do here!
-            })
-        }
-      }]);
-
-      function headers() {
-        return {
-            headers: { 'Cache-Control': 'no-cache' }
-        }
-      }
-
-  </script>
 </body>
+
 </html>

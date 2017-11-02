@@ -1,0 +1,59 @@
+<div>
+
+    <div>
+        <h2>Leader Board</h2>
+        <div ng-include="'./fragments/loading.html'"></div>
+        <div ng-cloak ng-if="loaded" style="float: left; width: 50%;">
+            <table class="tablesorter" style="margin:auto;">
+                <thead>
+                    <tr class="tableHeader">
+                        <td colspan=5>Current Finalists (subject to change)</td>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="score in scoreBoard.slice(0,4) | orderBy: ['rank']">
+                    <tr class="topFour">
+                        <td>
+                            <img width="30" src="trophy.gif" class="trophy">
+                        </td>
+                        <td>{{score.player.split('@')[0]}}</td>
+                        <td>{{score.score}}</td>
+                        <td>{{score.gameCount}}</td>
+                        <td>{{score.goalDifference}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="float: right; width: 50%;">
+            <table ng-if="loaded" class="tablesorter" style="margin:auto;">
+                <thead>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Points</th>
+                    <th>Games played</th>
+                    <th>Goal diff</th>
+                </thead>
+                <thead>
+                    <tr class="tableHeader">
+                        <td colspan=5>Rest of Losers</td>
+                    </tr>
+                </thead>
+
+                <tbody ng-repeat="score in scoreBoard.slice(4) | orderBy: ['rank']">
+
+                    <tr>
+                        <td>{{score.rank}}</td>
+                        <td>{{score.player.split('@')[0]}}</td>
+                        <td>{{score.score}}</td>
+                        <td>{{score.gameCount}}</td>
+                        <td>{{score.goalDifference}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div style="text-align: center; clear: both; padding-top: 40px;">
+        <a href="http://nofussball.herokuapp.com">http://nofussball.herokuapp.com</a>
+    </div>
+</div>
