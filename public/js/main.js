@@ -49,15 +49,13 @@ fussBallApp.controller('gameController', ['$scope', '$http', function ($scope, $
     $http.get('/tournaments/' + tournamentId, headers()).
         then(function (response) {
             $scope.loaded = true
-            $scope.games = response.data.games;
+            $scope.pendingGames = _.filter(response.data.games, function(game) { 
+                return !(game.team1Score && game.team2Score);
+             });
+            $scope.completedGames = _.difference(response.data.games, $scope.pendingGames);
         });
 
-    $scope.markDirty = function (game) {
-        game.isDirty = true
-    }
-
     $scope.submitScore = function (game) {
-        delete game.isDirty
         $http.put('/tournaments/' + tournamentId + '/games/' + game.id, game), headers().
             then(function (response) {
                 // nothing to do here!
