@@ -13,7 +13,7 @@ var fussBallApp = angular.module('fussBallApp-kiosk', ['ngRoute']);
 fussBallApp.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: './views/kioskScores.html',
+            templateUrl: './views/scores.html',
             controller: 'mainController'
         })
         ;

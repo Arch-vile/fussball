@@ -7,34 +7,48 @@
 <div ng-include="'./fragments/loading.html'"></div>
 <div ng-if="loaded">
     <br/>
-    <table id="leaderBoard" class="tablesorter">
-        <thead>
-            <th>Rank</th>
-            <th>Player</th>
-            <th>Points</th>
-            <th>Games played</th>
-            <th>Goal diff</th>
-        </thead>
-
-        <tbody ng-repeat="score in scoreBoard | orderBy: ['rank'] | filter: playerFilter">
-
-            <tr class="tableHeader" ng-if="score.rank == 1 && !playerFilter">
-                <td colspan=5>Current Finalists (subject to change)</td>
-            </tr>
-
-            <tr ng-class="score.rank <= 4 ? 'topFour' : 'none' ">
-                <td ng-if="score.rank <= 4">
-                    <img width="30" src="trophy.gif" class="trophy">
-                </td>
-                <td ng-if="score.rank > 4">{{score.rank}}</td>
-                <td>{{score.player.split('@')[0]}}</td>
-                <td>{{score.score}}</td>
-                <td>{{score.gameCount}}</td>
-                <td>{{score.goalDifference}}</td>
-            </tr>
-            <tr class="tableHeader" ng-if="score.rank == 4 && !playerFilter">
-                <td colspan=5>Rest of Losers</td>
-            </tr>
-        </tbody>
-    </table>
+    <div style="float: left">
+        <h3>Current Finalists (subject to change)</h3>
+        <table style="margin: 10px">
+            <thead>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Points</th>
+                <th>Games played</th>
+                <th>Goal diff</th>
+            </thead>
+            <tbody ng-repeat="score in scoreBoard.slice(0,4) | orderBy: ['rank'] | filter: playerFilter">
+                <tr>
+                    <td>
+                        <img width="30" src="trophy.gif" class="trophy">
+                    </td>
+                    <td>{{score.player.split('@')[0]}}</td>
+                    <td>{{score.score}}</td>
+                    <td>{{score.gameCount}}</td>
+                    <td>{{score.goalDifference}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="float: left">
+        <h3>Rest of Losers</h3>
+        <table style="margin: 10px">
+            <thead>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Points</th>
+                <th>Games played</th>
+                <th>Goal diff</th>
+            </thead>
+            <tbody ng-repeat="score in scoreBoard.slice(4) | orderBy: ['rank'] | filter: playerFilter">
+                <tr>
+                    <td>{{score.rank}}</td>
+                    <td>{{score.player.split('@')[0]}}</td>
+                    <td>{{score.score}}</td>
+                    <td>{{score.gameCount}}</td>
+                    <td>{{score.goalDifference}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
