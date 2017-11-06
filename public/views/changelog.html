@@ -1,4 +1,4 @@
 <div ng-repeat="commit in commits | filter: commitFilter">
-    <p>{{commit.commit.committer.date}} - {{commit.commit.message}}</p>
+    <p>{{commit.commit.committer.date | date:'yyyy-MM-dd'}} - {{commit.commit.message}}</p>
 </div>
         
