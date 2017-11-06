@@ -27,6 +27,11 @@ fussBallApp.config(function ($routeProvider) {
             templateUrl: './views/help.html'
         })
 
+        .when('/changelog', {
+            templateUrl: './views/changelog.html',
+            controller: 'changeLogController'
+        })
+
         .when('/rules', {
             templateUrl: './views/rules.html'
         })
@@ -42,6 +47,18 @@ fussBallApp.controller('mainController', ['$scope', '$http', function ($scope, $
             $scope.scoreBoard = response.data.scores;
         });
 
+}]);
+
+fussBallApp.controller('changeLogController', ['$scope', '$http', function ($scope, $http) {
+    $scope.loaded = false
+    $http.get('https://api.github.com/repos/arch-vile/fussball/commits?per_page=50').
+        then(function (response) {
+            $scope.loaded = true
+            $scope.commits = response.data;
+        });
+    $scope.commitFilter = function(commit)   { 
+        return commit.commit.message.toLowerCase().includes('feature') || commit.commit.message.toLowerCase().includes('bugfix')
+    }
 }]);
 
 fussBallApp.controller('gameController', ['$scope', '$http', function ($scope, $http) {
