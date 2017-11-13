@@ -73,9 +73,10 @@ fussBallApp.controller('gameController', ['$scope', '$http', function ($scope, $
         });
 
     $scope.submitScore = function (game) {
-        $http.put('/tournaments/' + tournamentId + '/games/' + game.id, game), headers().
+        $http.put('/tournaments/' + tournamentId + '/games/' + game.id, game, headers()).
             then(function (response) {
-                // nothing to do here!
+                $scope.pendingGames = _.without($scope.pendingGames, game);
+                $scope.completedGames.push(response.data);
             })
     }
 }]);
