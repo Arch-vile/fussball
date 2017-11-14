@@ -66,19 +66,26 @@ fussBallApp.controller('gameController', ['$scope', '$http', function ($scope, $
     $http.get('/tournaments/' + tournamentId, headers()).
         then(function (response) {
             $scope.loaded = true
-            $scope.pendingGames = _.filter(response.data.games, function(game) { 
+            $scope.finale = _.filter(response.data.games, function(game) { return game.isFinale;})[0];
+            const remaining = _.without(response.data.games, $scope.finale)
+            $scope.pendingGames = _.filter(remaining, function(game) { 
                 return !(game.team1Score && game.team2Score);
              });
-            $scope.completedGames = _.difference(response.data.games, $scope.pendingGames);
+            $scope.completedGames = _.difference(remaining, $scope.pendingGames);
         });
 
     $scope.submitScore = function (game) {
         $http.put('/tournaments/' + tournamentId + '/games/' + game.id, game, headers()).
             then(function (response) {
-                $scope.pendingGames = _.without($scope.pendingGames, game);
-                $scope.completedGames.push(response.data);
+                if(!game.isFinale) {
+                    $scope.pendingGames = _.without($scope.pendingGames, game);
+                    $scope.completedGames.push(response.data);
+                } else {
+                    $scope.finale = response.data;
+                }
             })
     }
+
 }]);
 
 function headers() {
