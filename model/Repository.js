@@ -33,6 +33,25 @@ class Repository {
     updateGame(tournamentId, game, cb) {
         const self = this
         game.udpdatedAt = new Date()
+
+        // Handle finale as special case for best out of three games
+        if(game.isFinale) {
+            // Add another game if only one
+            if(game.games.length == 1 && game.games[0].team1Score && game.games[0].team2Score) { 
+                game.games.push({})
+            }
+
+            // If draw, add a third game
+            if(game.games.length == 2) {
+                if( 
+                    (game.games[0].team1Score > game.games[0].team2Score && game.games[1].team1Score < game.games[1].team2Score) || 
+                    (game.games[0].team1Score < game.games[0].team2Score && game.games[1].team1Score > game.games[1].team2Score)) {
+                    game.games.push({})
+                }
+            }
+        }
+
+
         this.db.updateOne(
             {
                 _id: ObjectId(tournamentId),
@@ -60,6 +79,7 @@ class Repository {
         self.leaderBoard(tournamentId, function (err, ranked) {
             const finale = new model.Game(ranked.shift().player, ranked.shift().player, ranked.shift().player, ranked.shift().player)
             finale.isFinale = true
+            finale.games = [ { } ]
             self.db.update({
                 _id: ObjectId(tournamentId)
             }, {
