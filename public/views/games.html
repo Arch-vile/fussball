@@ -6,7 +6,7 @@
 <div ng-if="loaded">
     <br/>
     <div style="float:left">
-        <h3>!! Finale !!</h3>
+        <h3>Final</h3>
         <table>
             <thead>
                 <th>Game #</th>
@@ -21,7 +21,7 @@
             </tbody>
             <tbody ng-repeat="game in finale.games">
                 <tr>
-                    <td>Game #{{$index+1}}</td>
+                    <td><img width="30" src="trophy.gif" class="trophy"> Game #{{$index+1}} <img width="30" src="trophy.gif" class="trophy"></td>
                     <td>{{finale.team1Player1.split('@')[0]}}
                         <br/>{{finale.team1Player2.split('@')[0]}}</td>
                     <td ng-if="!(game.team1Score && game.team2Score)">
