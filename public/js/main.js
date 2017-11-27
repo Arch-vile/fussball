@@ -63,30 +63,29 @@ fussBallApp.controller('changeLogController', ['$scope', '$http', function ($sco
 
 fussBallApp.controller('gameController', ['$scope', '$http', function ($scope, $http) {
     $scope.loaded = false
-    $http.get('/tournaments/' + tournamentId, headers()).
-        then(function (response) {
-            $scope.loaded = true
-            $scope.finale = _.filter(response.data.games, function(game) { return game.isFinale;})[0];
-            const remaining = _.without(response.data.games, $scope.finale)
-            $scope.pendingGames = _.filter(remaining, function(game) { 
-                return !(game.team1Score && game.team2Score);
-             });
-            $scope.completedGames = _.difference(remaining, $scope.pendingGames);
-        });
+    loadGames($scope,$http)
 
     $scope.submitScore = function (game) {
         $http.put('/tournaments/' + tournamentId + '/games/' + game.id, game, headers()).
             then(function (response) {
-                if(!game.isFinale) {
-                    $scope.pendingGames = _.without($scope.pendingGames, game);
-                    $scope.completedGames.push(response.data);
-                } else {
-                    $scope.finale = response.data;
-                }
+                loadGames($scope,$http)
             })
     }
 
 }]);
+
+function loadGames(scope,http) {
+    http.get('/tournaments/' + tournamentId, headers()).
+    then(function (response) {
+        scope.loaded = true
+        scope.finale = _.filter(response.data.games, function(game) { return game.isFinale;})[0];
+        const remaining = _.without(response.data.games, scope.finale)
+        scope.pendingGames = _.filter(remaining, function(game) { 
+            return !(game.team1Score && game.team2Score);
+         });
+        scope.completedGames = _.difference(remaining, scope.pendingGames);
+    });
+}
 
 function headers() {
     return {

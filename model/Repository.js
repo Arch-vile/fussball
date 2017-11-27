@@ -65,16 +65,17 @@ class Repository {
                         self.getTournament(tournamentId, function (err, tournament) {
                             const pendingGames = _.filter(tournament.games, function (game) { return !game.team1Score && !game.team2Score })
                             if (pendingGames.length == 0) {
-                                self.createFinale(tournamentId)
+                                self.createFinale(tournamentId, function() { cb(undefined, game) })
                             }
                         })
+                    } else {
+                        cb(undefined, game)
                     }
-                    cb(undefined, game)
                 }
             })
     }
 
-    createFinale(tournamentId) {
+    createFinale(tournamentId, cb) {
         const self = this
         self.leaderBoard(tournamentId, function (err, ranked) {
             const finale = new model.Game(ranked.shift().player, ranked.shift().player, ranked.shift().player, ranked.shift().player)
@@ -86,7 +87,7 @@ class Repository {
                     $push: { games: finale }
                 }, function (err, result) {
                     if (result) {
-                        console.log('Created final game: ' + JSON.stringify(finale))
+                        cb();
                     }
                 })
         })
