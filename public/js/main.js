@@ -2,7 +2,8 @@ var tournamentId
 jQuery.ajax({
     url: '/tournaments',
     success: function (result) {
-        tournamentId = result.tournaments[0]._id
+        tournamentId = "5a5f9f7dd11ee1001453e5bb"
+        //result.tournaments[0]._id
     },
     async: false
 });
