@@ -12,7 +12,6 @@ class Repository {
 
     createTournament(tournament, cb) {
         tournament.createdAt = new Date()
-        tournament.games = this.generateGames(tournament)
         this.db.insertOne(tournament, function (err, tournament) {
             cb(err, tournament)
         })
