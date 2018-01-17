@@ -12,6 +12,7 @@ class Repository {
 
     createTournament(tournament, cb) {
         tournament.createdAt = new Date()
+        tournament.players = []
         this.db.insertOne(tournament, function (err, tournament) {
             cb(err, tournament)
         })
