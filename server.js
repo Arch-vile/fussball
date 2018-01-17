@@ -22,6 +22,12 @@ app.post('/tournaments', function(req,res){
     })
 })
 
+app.post('/tournaments/:id/players', function(req,res){
+    new Repository(req.db).addPlayer(req.params.id, req.body, function(err,data){
+        res.send(201)
+    })
+})
+
 app.get('/tournaments', function(req,res){
     new Repository(req.db).getTournaments(function(err,data){
         res.send({ 'tournaments': data })

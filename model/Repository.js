@@ -17,6 +17,18 @@ class Repository {
         })
     }
 
+    addPlayer(tournamentId, player, cb) {
+        this.db.update({
+            _id: ObjectId(tournamentId)
+        }, {
+                $push: { players: player.email }
+            }, function (err, result) {
+                if (result) {
+                    cb();
+                }
+            })
+    }
+
     getTournament(id, cb) {
         this.db.findOne({ _id: ObjectId(id) }, function (err, tournament) {
             cb(err, tournament)

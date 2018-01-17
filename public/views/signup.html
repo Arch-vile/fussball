@@ -1,0 +1,14 @@
+<h2>Player sign up</h2>
+<p>
+    Tournament will start on 29th of January!
+</p>
+<p>
+    Please, sign up using your email:<br/><br/>
+    Email: <input ng-model="newPlayerEmail"/> 
+    <a href="" ng-click="signup(newPlayerEmail)">Submit</a>
+</p>
+<h3>Already signed</h3>
+<ul>
+    <li ng-repeat="player in players">{{player}}</li>
+</ul>
+

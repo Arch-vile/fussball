@@ -32,6 +32,11 @@ fussBallApp.config(function ($routeProvider) {
             controller: 'changeLogController'
         })
 
+        .when('/signup', {
+            templateUrl: './views/signup.html',
+            controller: 'signupController'
+        })
+
         .when('/rules', {
             templateUrl: './views/rules.html'
         })
@@ -60,6 +65,27 @@ fussBallApp.controller('changeLogController', ['$scope', '$http', function ($sco
         return commit.commit.message.toLowerCase().includes('feature') || commit.commit.message.toLowerCase().includes('bugfix')
     }
 }]);
+
+fussBallApp.controller('signupController', ['$scope', '$http', function ($scope, $http) {
+    $scope.loaded = false
+    loadPlayers($scope,$http)
+
+    $scope.signup = function(newPlayerEmail) {
+        $http.post('/tournaments/' + tournamentId + '/players', { "email": newPlayerEmail }, headers()).
+        then(function (response) {
+            $scope.newPlayerEmail = null
+            loadPlayers($scope,$http)
+        })
+    }
+}]);
+
+function loadPlayers(scope,http) {
+    http.get('/tournaments/' + tournamentId, headers()).
+    then(function (response) {
+        scope.loaded = true
+        scope.players = response.data.players;
+    });
+}
 
 fussBallApp.controller('gameController', ['$scope', '$http', function ($scope, $http) {
     $scope.loaded = false
