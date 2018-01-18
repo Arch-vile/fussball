@@ -37,7 +37,7 @@ class Repository {
     }
 
     getTournaments(cb) {
-        this.db.find({}).toArray(function (err, tournaments) {
+        this.db.find({}).sort({ createdAt: -1}).toArray(function (err, tournaments) {
             cb(err, tournaments)
         })
     }
