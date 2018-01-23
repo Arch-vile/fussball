@@ -40,6 +40,15 @@ app.get('/tournaments/:id', function(req,res){
     })
 })
 
+app.put('/tournaments/:id/start', function(req,res){
+    new Repository(req.db).startTournament(req.params.id,function(err,data){
+        if(err)
+            res.status(500).send(err)
+        else
+            res.send(200)
+    })
+})
+
 app.put('/tournaments/:tId/games/:gId', function(req,res){
     new Repository(req.db).updateGame(req.params.tId, req.body, function(err,data){
         if(err)
