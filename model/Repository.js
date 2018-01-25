@@ -19,15 +19,24 @@ class Repository {
     }
 
     addPlayer(tournamentId, player, cb) {
-        this.db.update({
-            _id: ObjectId(tournamentId)
-        }, {
-                $push: { players: player.email }
-            }, function (err, result) {
-                if (result) {
-                    cb();
-                }
-            })
+        var self = this
+        this.db.findOne({ _id: ObjectId(tournamentId) }, function (err, tournament) {
+            if(tournament.games) {
+                cb("Cannot add player to tournament already having games!")
+                return
+            }
+            self.db.update({
+                _id: ObjectId(tournamentId)
+            }, {
+                    $push: { players: player.email }
+                }, function (err, result) {
+                    if (result) {
+                        cb();
+                    }
+                })
+        })
+
+        
     }
 
     updateTournament(tournament, cb) {
