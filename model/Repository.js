@@ -171,7 +171,7 @@ class Repository {
     startTournament(tournamentId, cb) {
         const self = this
         this.getTournament(tournamentId, function (err, tournament) {
-           //if(tournament.games)  throw "Tournament already has games!"
+            if(tournament.games)  throw "Tournament already has games!"
 
             try {
                 
