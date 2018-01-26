@@ -22,7 +22,8 @@ class Repository {
         var self = this
         this.db.findOne({ _id: ObjectId(tournamentId) }, function (err, tournament) {
             if(tournament.games) {
-                cb("Cannot add player to tournament already having games!")
+                console.log("Cannot add player to already started tournament!")
+                cb("Cannot add player to already started tournament!")
                 return
             }
             self.db.update({
@@ -155,9 +156,9 @@ class Repository {
         games.forEach(function (game) {
             if (game.team1Score && game.team2Score) {
 
-                const team1Score = game.team1Score > game.team2Score ? game.team1Score : Math.floor(game.team1Score / 2)
+                const team1Score = game.team1Score > game.team2Score ? game.team1Score*10 : game.team1Score*5
                 const team1GoalDiff = game.team1Score - game.team2Score
-                const team2Score = game.team2Score > game.team1Score ? game.team2Score : Math.floor(game.team2Score / 2)
+                const team2Score = game.team2Score > game.team1Score ? game.team2Score*10 : game.team2Score*5
                 const team2GoalDiff = game.team2Score - game.team1Score
 
                 update(scores, game.team1Player1, team1Score, team1GoalDiff)

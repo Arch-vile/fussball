@@ -24,7 +24,11 @@ app.post('/tournaments', function(req,res){
 
 app.post('/tournaments/:id/players', function(req,res){
     new Repository(req.db).addPlayer(req.params.id, req.body, function(err,data){
-        res.send(201)
+        if(err) {
+            res.status(500).send(err) 
+        } else {
+            res.send(201)
+        }
     })
 })
 
@@ -54,7 +58,7 @@ app.put('/tournaments/:tId/games/:gId', function(req,res){
         if(err)
             res.send(500)
         else
-            res.send(data)
+            res.send("Game updated")
     })
 })
 
