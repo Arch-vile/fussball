@@ -95,6 +95,8 @@ class Repository {
                             const pendingGames = _.filter(tournament.games, function (game) { return !game.team1Score && !game.team2Score })
                             if (pendingGames.length == 0) {
                                 self.createFinale(tournamentId, function() { cb(undefined, game) })
+                            } else {
+                                cb(undefined,game)
                             }
                         })
                     } else {
