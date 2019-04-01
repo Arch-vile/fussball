@@ -61,12 +61,12 @@
                     <td>{{game.team1Player1.split('@')[0]}}
                         <br/>{{game.team1Player2.split('@')[0]}}</td>
                     <td>
-                        <select ng-model="game.team1Score" ng-options="score for score in [1,2,3,4,5,6,7,8,9,10]">
+                        <select ng-model="game.team1Score" ng-options="score for score in [0,1,2,3,4,5,6,7,8,9,10]">
                         </select>
                     </td>
                     <td>vs</td>
                     <td>
-                        <select ng-model="game.team2Score" ng-options="score for score in [1,2,3,4,5,6,7,8,9,10]">
+                        <select ng-model="game.team2Score" ng-options="score for score in [0,1,2,3,4,5,6,7,8,9,10]">
                         </select>
                     </td>
                     <td align="right">{{game.team2Player1.split('@')[0]}}
