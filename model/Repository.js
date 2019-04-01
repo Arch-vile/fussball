@@ -4,6 +4,10 @@ var assert = require("assert");
 const _ = require("underscore");
 var ObjectId = require("mongodb").ObjectID;
 
+function isNumber(number) {
+  return number !== null && number != undefined && number !== NaN;
+}
+
 class Repository {
   constructor(dbConnection) {
     this.db = dbConnection.collection("tournaments");
@@ -77,8 +81,8 @@ class Repository {
       // Add another game if only one
       if (
         game.games.length == 1 &&
-        game.games[0].team1Score &&
-        game.games[0].team2Score
+        isNumber(game.games[0].team1Score) &&
+        isNumber(game.games[0].team2Score)
       ) {
         game.games.push({});
       }
@@ -108,7 +112,7 @@ class Repository {
           if (!game.isFinale) {
             self.getTournament(tournamentId, function(err, tournament) {
               const pendingGames = _.filter(tournament.games, function(game) {
-                return !game.team1Score && !game.team2Score;
+                return !isNumber(game.team1Score) && !isNumber(game.team2Score);
               });
               if (pendingGames.length == 0) {
                 self.createFinale(tournamentId, function() {
@@ -184,7 +188,7 @@ class Repository {
     }
 
     games.forEach(function(game) {
-      if (game.team1Score && game.team2Score) {
+      if (isNumber(game.team1Score) && isNumber(game.team2Score)) {
         const team1Score =
           game.team1Score > game.team2Score
             ? game.team1Score * 10

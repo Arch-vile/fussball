@@ -132,6 +132,10 @@ fussBallApp.controller("gameController", [
   }
 ]);
 
+function isNumber(number) {
+  return number !== null && number != undefined && number !== NaN;
+}
+
 function loadGames(scope, http) {
   http.get("/tournaments/" + tournamentId, headers()).then(function(response) {
     scope.loaded = true;
@@ -140,7 +144,7 @@ function loadGames(scope, http) {
     })[0];
     const remaining = _.without(response.data.games, scope.finale);
     scope.pendingGames = _.filter(remaining, function(game) {
-      return !(game.team1Score && game.team2Score);
+      return !(isNumber(game.team1Score) && isNumber(game.team2Score));
     });
     scope.completedGames = _.difference(remaining, scope.pendingGames);
   });
