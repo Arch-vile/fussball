@@ -97,6 +97,10 @@ fussBallApp.controller('gameController', ['$scope', '$http', function ($scope, $
                 loadGames($scope,$http)
             })
     }
+    
+    $scope.isNumber = function (number) {
+        return number !== null && number !== undefined && number !== NaN;
+    }
 
 }]);
 
